@@ -1,1 +1,113 @@
 
+*,
+*::before, 
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    --darkest: black;
+    --darker: #1A1E21 ;
+    --lighter-background: #353A48;
+    --light-text: #D0D4D7;
+    --med-light-text: #A3A8B2;
+    --bright: #FFDB6A;
+    --dark-text: #503F0F;
+}
+
+html, 
+body,
+.container {
+    height: 100%;
+    margin: 0; 
+    padding: 0;
+} 
+
+body {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-image: radial-gradient(var(--lighter-background), var(--darker));
+}
+
+.header-container {
+    color: var(--bright);
+    padding: 20px;
+}
+
+header {
+    display: inline-block;
+}
+
+.span-container {
+    padding-top: 0px;
+    margin-right: 20px;
+    float: right;
+}
+
+span {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.container {
+    padding-top: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    max-width: 980px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.heading {
+    text-align: center;
+    padding: 10px;
+    padding-top: 6%; 
+    color: var(--light-text);
+    font-size: calc(30px + 0.390625vw);
+    height: em;
+    margin: 0px;
+}
+
+.heading h1 {
+    height: em;
+    margin: 0px;
+    text-shadow: 2px 2px 4px var(--darker);
+}
+
+.body-text {
+    font-size: calc(25px + 0.390625vw);
+    color: var(--med-light-text);
+    text-shadow: 2px 2px 4px var(--darker);
+}
+
+
+.button-container {
+    text-align: center;
+    height: 10%;
+    width: 20%;
+    margin: 0 auto;
+  }
+  
+.button-container::before {
+    content: " ";
+    display: block;
+    width: 100%;
+    height: 2px;
+}
+  
+.button-container::after {
+    content: " ";
+    display: block;
+    clear: both;
+}
+
+.button {
+    background-color: var(--bright);
+    color: var(--dark-text);
+    border-color: var(--darker);
+    border-radius: 20px;
+    box-shadow: 0 0 20px var(--darker);
+    font-size: calc(25px + 0.390625vw);
+    height: 100%;
+    width: 100%;
+}
