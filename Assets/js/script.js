@@ -191,23 +191,69 @@ startQuiz.addEventListener("click", function() {
     }
 })
 
-function createButton (text) {
+function createButton (text, correct) {
     var newButton = document.createElement("button");
     newButton.textContent = text;
     newButton.classList.add("button");
     newButton.addEventListener("click", goToNext)
     buttonContainer.append(newButton)
 
-    if (questions[0].options.textContent === questions[0].correct) {
-        newButton.onclick = function addToScore() {
-        addToScore();
-        score = score + 1;
-        console.log("Score increased by 1.");
-        }
+    if (text == correct) {
+        newButton.addEventListener("click", function() {
+            score = score + 1;
+            console.log("Score increased by 1.");
+        })
     } else {
-        console.log("Score will not be increased.");
+        newButton.addEventListener("click", function() {
+            secondsLeft = secondsLeft - 15;
+        })
+        console.log("Score not increased, and secondsLeft has been decreased by 15.");
     }
+
+    // Problem: some correct answers are causing the secondsLeft to be decreased, and some questions are causing the score to be increased and the secondsLeft to be decreased. I tried the below 2 methods within the createButton function to try to make only the correct answer buttons get the event listener that increases score by 1, and only the incorrect answer buttons get the event listener that decreases secondsLeft. Neither method worked, and the first method got rid of all answer buttons except 1, for each question.
+
+    // if (text == correct) {
+    //     newButton = correctButton
+    //     correctButton.addEventListener("click", function() {
+    //         score = score + 1;
+    //         console.log("Score increased by 1.");
+    //     })
+    // } else {
+    //     newButton = incorrectButton
+    //     incorrectButton.addEventListener("click", function() {
+    //         secondsLeft = secondsLeft - 15;
+    //     })
+    //     console.log("Score not increased, and secondsLeft has been decreased by 15.");
+    // }
+
+    // if (text == correct) {
+    //     var correctButton = newButton
+    //     correctButton.addEventListener("click", function() {
+    //         score = score + 1;
+    //         console.log("Score increased by 1.");
+    //     })
+    // } else {
+    //     var incorrectButton = newButton
+    //     incorrectButton.addEventListener("click", function() {
+    //         secondsLeft = secondsLeft - 15;
+    //     })
+    //     console.log("Score not increased, and secondsLeft has been decreased by 15.");
+    // }  
 }
+
+
+//     This was another previous attempt to increase score if a question is answered correctly: 
+// The below only ever causes "Score will not be increased" to be logged, so I know that my attempt to increase the score by 1 when a correct answer is clicked is not working.
+//     if (questions[0].options.textContent === questions[0].correct) {
+//         newButton.onclick = function addToScore() {
+//         addToScore();
+//         score = score + 1;
+//         console.log("Score increased by 1.");
+//         }
+//     } else {
+//         console.log("Score will not be increased.");
+//     }
+// }
 
 function goToNext() {
     if (currentIndex < questions.length - 1) {
@@ -218,8 +264,8 @@ function goToNext() {
         buttonContainer.innerHTML = "";
 
         for (i = 0; i < 4; i++) {
-            createButton(questions[currentIndex].options[i]);
-        }
+            createButton(questions[currentIndex].options[i], questions[currentIndex].correct);
+        }   
     } else {
         allDone();
     }    
@@ -232,6 +278,7 @@ function allDone() {
     // Replace below with: medText.textContent = "Your final score is " + score + " out of 15 (" + percentScore + "%)."
     medText.textContent = "Your final score is __ out of 15."
     buttonContainer.innerHTML = "";
+    console.log(score);
     function createForm() {
         var createFormEl = document.createElement("form");
         bodyText.appendChild(createFormEl);
