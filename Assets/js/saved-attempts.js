@@ -5,6 +5,7 @@ var largeText = document.getElementById("large-text");
 var medText = document.querySelector(".med-text");
 var bodyText = document.querySelector(".body-text");
 var currentIndex = 0;
+var score = 0;
 
 var questions = [
     {
@@ -29,7 +30,7 @@ var questions = [
     },
     {
         text: "3. Arrays in JavaScript can be used to store _____.",
-         options: [
+        options: [
             "1. numbers and strings", 
             "2. other arrays", 
             "3. booleans", 
@@ -160,6 +161,14 @@ var questions = [
     }
 ]
 
+// I tried the below to see if I could successfully get the secondsLeft to be decreased appropriately for 1 incorrect button. The below only produces the error: script.js:169  Uncaught TypeError: q1a1.addEventListener is not a function.
+// var q1a1 = questions[0].options[0];
+// q1a1.className = "incorrect";
+
+// q1a1.addEventListener("click", function() {
+//     secondsLeft = secondsLeft - 15;
+//     console.log("Your current score is " + score + " and your secondsLeft is " + secondsLeft + ".")
+// })
 
 var counterEl = document.querySelector(".counter"); 
 // Ultimately, I want the user to have 90 seconds to complete the quiz. I may mess with this value to test functionality, but I think 90 seconds is a good amount of time for them to have at the start.
@@ -177,9 +186,6 @@ function setCounter() {
     }, 1000);
 }
 
-var score = 0;
-
-
 startQuiz.addEventListener("click", function() {
     setCounter();
     largeText.remove();
@@ -191,13 +197,13 @@ startQuiz.addEventListener("click", function() {
     }
 })
 
-function createButton (text) {
+function createButton (text, correct) {
     var newButton = document.createElement("button");
     newButton.textContent = text;
     newButton.classList.add("button");
     newButton.addEventListener("click", goToNext);
     buttonContainer.append(newButton);
-
+    
     // Problem: some correct answers are causing the secondsLeft to be decreased, and some questions are causing the score to be increased and the secondsLeft to be decreased. I tried the below 2 methods within the createButton function to try to make only the correct answer buttons get the event listener that increases score by 1, and only the incorrect answer buttons get the event listener that decreases secondsLeft. Neither method worked, and the first method got rid of all answer buttons except 1, for each question.
 
     // if (text == correct) {
@@ -243,39 +249,37 @@ function createButton (text) {
 //     }
 // }
 
+
+
 function goToNext(text, correct) {
     if (currentIndex < questions.length - 1) {
         currentIndex++;
 
         // Change question text
         medText.textContent = questions[currentIndex].text;
+        
         buttonContainer.innerHTML = "";
 
         for (i = 0; i < 4; i++) {
-            createButton(questions[currentIndex].options[i]);
-            // createButton(questions[currentIndex].options[i], questions[currentIndex].correct);
+            createButton(questions[currentIndex].options[i], questions[currentIndex].correct);
+            // createButton(questions[currentIndex].options[i]);
+            var button = document.querySelectorAll("button");
+            button.addEventListener("click", function() {
+                if (text == correct) {
+                    score = score + 1;
+                    console.log("Your current score is " + score + " and your secondsLeft is " + secondsLeft + ".");
+                } else {
+                    secondsLeft = secondsLeft - 15;
+                    console.log("Your current score is " + score + " and your secondsLeft is " + secondsLeft + ".");
+                }})
         }   
-
-        // Does the below if else need to be looped? The function goToNext already calls the createButton function to happen for each i of the answers. But that will only create the buttons, and we need the below if else to happen for each of the buttons. So, I think we have to loop it. 
-
-        if (text == correct) {
-            var correctButton = document.querySelector("button");
-            correctButton.addEventListener("click", function() {
-                score = score + 1;
-                console.log("Your current score is " + score + " and your secondsLeft is " + secondsLeft + ".")
-            })
-        } else {
-            var incorrectButton = document.querySelector("button")
-            incorrectButton.addEventListener("click", function() {
-                secondsLeft = secondsLeft - 15;
-                console.log("Your current score is " + score + " and your secondsLeft is " + secondsLeft + ".")
-            })
-        }
-
     } else {
         allDone();
     }    
 }
+
+// function changeScoreAndTime () {
+// }
 
 // percentScore = Math.floor((score / 15) * 100)
 
