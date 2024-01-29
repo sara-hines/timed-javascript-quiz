@@ -191,24 +191,12 @@ startQuiz.addEventListener("click", function() {
     }
 })
 
-function createButton (text, correct) {
+function createButton (text) {
     var newButton = document.createElement("button");
     newButton.textContent = text;
     newButton.classList.add("button");
-    newButton.addEventListener("click", goToNext)
-    buttonContainer.append(newButton)
-
-    if (text == correct) {
-        newButton.addEventListener("click", function() {
-            score = score + 1;
-            console.log("Score increased by 1.");
-        })
-    } else {
-        newButton.addEventListener("click", function() {
-            secondsLeft = secondsLeft - 15;
-        })
-        console.log("Score not increased, and secondsLeft has been decreased by 15.");
-    }
+    newButton.addEventListener("click", goToNext);
+    buttonContainer.append(newButton);
 
     // Problem: some correct answers are causing the secondsLeft to be decreased, and some questions are causing the score to be increased and the secondsLeft to be decreased. I tried the below 2 methods within the createButton function to try to make only the correct answer buttons get the event listener that increases score by 1, and only the incorrect answer buttons get the event listener that decreases secondsLeft. Neither method worked, and the first method got rid of all answer buttons except 1, for each question.
 
@@ -255,7 +243,7 @@ function createButton (text, correct) {
 //     }
 // }
 
-function goToNext() {
+function goToNext(text, correct) {
     if (currentIndex < questions.length - 1) {
         currentIndex++;
 
@@ -264,8 +252,26 @@ function goToNext() {
         buttonContainer.innerHTML = "";
 
         for (i = 0; i < 4; i++) {
-            createButton(questions[currentIndex].options[i], questions[currentIndex].correct);
+            createButton(questions[currentIndex].options[i]);
+            // createButton(questions[currentIndex].options[i], questions[currentIndex].correct);
         }   
+
+        // Does the below if else need to be looped? The function goToNext already calls the createButton function to happen for each i of the answers. But that will only create the buttons, and we need the below if else to happen for each of the buttons. So, I think we have to loop it. 
+
+        if (text == correct) {
+            var correctButton = document.querySelector("button");
+            correctButton.addEventListener("click", function() {
+                score = score + 1;
+                console.log("Your current score is " + score + " and your secondsLeft is " + secondsLeft + ".")
+            })
+        } else {
+            var incorrectButton = document.querySelector("button")
+            incorrectButton.addEventListener("click", function() {
+                secondsLeft = secondsLeft - 15;
+                console.log("Your current score is " + score + " and your secondsLeft is " + secondsLeft + ".")
+            })
+        }
+
     } else {
         allDone();
     }    
