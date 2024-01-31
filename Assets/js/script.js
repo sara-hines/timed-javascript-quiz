@@ -165,17 +165,58 @@ var counterEl = document.querySelector(".counter");
 // Ultimately, I want the user to have 90 seconds to complete the quiz. I may mess with this value to test functionality, but I think 90 seconds is a good amount of time for them to have at the start.
 var secondsLeft = 90;
 
+// This is how my time keeping used to be set up, but it allows time to decrease into the negatives. 
+// function setCounter() {
+//     var timerInterval = setInterval(function() {
+//         secondsLeft--;
+//         counterEl.textContent = "Time: " + secondsLeft;
+
+//         if(secondsLeft === 0) {
+//             clearInterval(timerInterval);
+//             allDone();
+//         }
+//     }, 1000);
+// }
+
+// This still allows time to go into the negatives and it doesn't take the user to All Done when the time is up
+// function setCounter() {
+//     if (secondsLeft > 0) {
+//         var timerInterval = setInterval(function() {
+//             secondsLeft--;
+//             counterEl.textContent = "Time: " + secondsLeft;
+//     }, 1000);
+//     } else {
+//         clearInterval(timerInterval);
+//         allDone();
+//     }
+// }
+    
+// This also does not take user to All Done page when timer is up, and it still allows time to go into the negatives.
+// function setCounter() {
+//     var timerInterval = setInterval(function() {
+//         secondsLeft--;
+//         counterEl.textContent = "Time: " + secondsLeft;
+//     }, 1000);
+
+//     if (secondsLeft <= 0) {
+//         clearInterval(timerInterval);
+//         allDone();
+//     }
+// }
+
 function setCounter() {
     var timerInterval = setInterval(function() {
-        secondsLeft--;
-        counterEl.textContent = "Time: " + secondsLeft;
-
-        if(secondsLeft === 0) {
+        if (secondsLeft > 0) {
+            secondsLeft--;
+            counterEl.textContent = "Time: " + secondsLeft;
+        } else if (secondsLeft <= 0) {
+            counterEl.textContent = "";
             clearInterval(timerInterval);
             allDone();
         }
     }, 1000);
 }
+        
 
 var score = 0;
 
@@ -194,6 +235,8 @@ startQuiz.addEventListener("click", function() {
 function createButton (text) {
     var newButton = document.createElement("button");
     newButton.textContent = text;
+    // What is text here, which we are passing as a parameter and which we are setting to be the text content of the newButton? It is the text of each of the answer buttons. Why is that? Where does this come from? 
+    // console.log(text);
     newButton.classList.add("button");
     newButton.addEventListener("click", goToNext);
     buttonContainer.append(newButton);
@@ -243,11 +286,17 @@ function createButton (text) {
 //     }
 // }
 
-function goToNext(text, correct) {
+function goToNext(event) {
+    // research the below line if it's still not working and figure out how to access what we need to now. 
+    var chosenAnswer = event.target.textContent;
+    console.log(currentIndex)
+    console.log(chosenAnswer);
+    var correctAnswer = questions[currentIndex].correct
+    console.log(correctAnswer);
     if (currentIndex < questions.length - 1) {
         currentIndex++;
 
-        // Change question text
+        // The below line changes the text content of the element holding the text of the question to be the value of the text key in the array of objects named questions, for the currentIndex (which identifies the question we're on).
         medText.textContent = questions[currentIndex].text;
         buttonContainer.innerHTML = "";
 
@@ -258,31 +307,35 @@ function goToNext(text, correct) {
 
         // Does the below if else need to be looped? The function goToNext already calls the createButton function to happen for each i of the answers. But that will only create the buttons, and we need the below if else to happen for each of the buttons. So, I think we have to loop it. 
 
-        if (text == correct) {
-            var correctButton = document.querySelector("button");
-            correctButton.addEventListener("click", function() {
+        if (chosenAnswer == correctAnswer) {
+            // var correctButton = document.querySelectorAll("button");
+            // correctButton.addEventListener("click", function() {
                 score = score + 1;
-                console.log("Your current score is " + score + " and your secondsLeft is " + secondsLeft + ".")
-            })
+                console.log("Your current score is " + score + " (increased by 1) and your secondsLeft is " + secondsLeft + " (time was not decreased).")
+            // })
         } else {
-            var incorrectButton = document.querySelector("button")
-            incorrectButton.addEventListener("click", function() {
+        //     var incorrectButton = document.querySelector("button")
+        //     incorrectButton.addEventListener("click", function() {
                 secondsLeft = secondsLeft - 15;
-                console.log("Your current score is " + score + " and your secondsLeft is " + secondsLeft + ".")
-            })
+                console.log("Your current score is " + score + " (unchanged) and your secondsLeft is " + secondsLeft + " (time was decreased by 15 sec).")
+        //     })
         }
-
-    } else {
+    // I added the below because without it, the last question (question 15, currentIndex = 14) does not make any impact on score or secondsLeft depending on how the user answers.
+    } else if (currentIndex = questions.length) {
+        if (chosenAnswer == correctAnswer) {
+                score = score + 1;
+                console.log("Your current score is " + score + " (increased by 1) and your secondsLeft is " + secondsLeft + " (time was not decreased).")
+        } else {
+                secondsLeft = secondsLeft - 15;
+                console.log("Your current score is " + score + " (unchanged) and your secondsLeft is " + secondsLeft + " (time was decreased by 15 sec).")
+        }
         allDone();
     }    
 }
 
-// percentScore = Math.floor((score / 15) * 100)
-
 function allDone() {
     largeText.textContent = "All done!";
-    // Replace below with: medText.textContent = "Your final score is " + score + " out of 15 (" + percentScore + "%)."
-    medText.textContent = "Your final score is __ out of 15."
+    medText.textContent = "Your final score is " + score + " out of 15."
     buttonContainer.innerHTML = "";
     console.log(score);
     function createForm() {
@@ -302,5 +355,5 @@ function allDone() {
     }
     createForm();
     
-    console.log("function allDone is working!");
+    // console.log("function allDone is working!");
 }
