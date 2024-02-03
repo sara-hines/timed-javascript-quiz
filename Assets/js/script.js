@@ -5,6 +5,9 @@ var largeText = document.getElementById("large-text");
 var medText = document.querySelector(".med-text");
 var bodyText = document.querySelector(".body-text");
 var questionsText = document.querySelector(".questions");
+// The below line is necessary so that there is a container for the questions to be generated inside, but that container will not disrupt the styling of the start page. 
+questionsText.style.display = "none";
+// questionsText.setAttribute("style", "height: 0px; width: 0px");
 var viewScoresLink = document.getElementById("view-scores");
 var counterEl = document.querySelector(".counter"); 
 // Ultimately, I want the user to have 90 seconds to complete the quiz. I may mess with this value to test functionality, but I think 90 seconds is a good amount of time for them to have at the start.
@@ -219,6 +222,8 @@ function goToNext(event) {
     if (currentIndex < questions.length - 1) {
         currentIndex++;
 
+        // The below line effectively removes the display: none previously set on questionsText.
+        questionsText.style.display = "unset";
         // The below line changes the text content of the element holding the text of the question to be the value of the text key in the array of objects named questions, for the currentIndex (which identifies the question we're on).
         questionsText.textContent = questions[currentIndex].text;
         buttonContainer.innerHTML = "";
@@ -258,17 +263,27 @@ function allDone() {
         var formEl = document.createElement("form");
         bodyText.appendChild(formEl);
 
+        var submissionContainer = document.createElement("div");
+        submissionContainer.setAttribute("id", "submission-container");
+        formEl.appendChild(submissionContainer);
+
         var labelEl = document.createElement("label");
+        labelEl.classList.add("label");
         labelEl.textContent = "Enter Initials: "
-        formEl.appendChild(labelEl);
+        submissionContainer.appendChild(labelEl);
 
         var inputEl = document.createElement("input");
         inputEl.setAttribute("id", "initials");
-        formEl.appendChild(inputEl);
+        submissionContainer.appendChild(inputEl);
+
+        var submitBtnContainer = document.createElement("div");
+        submitBtnContainer.setAttribute("id", "submit-container");
+        formEl.appendChild(submitBtnContainer);
 
         var submitBtnEl = document.createElement("button");
         submitBtnEl.textContent = "Submit";
-        
+        submitBtnEl.setAttribute("id", "submit-btn");
+
         submitBtnEl.addEventListener("click", function(event) {
             event.preventDefault();
             var initialsEl = document.getElementById("initials");
@@ -283,7 +298,7 @@ function allDone() {
             }
               
         })
-        formEl.appendChild(submitBtnEl);
+        submitBtnContainer.appendChild(submitBtnEl);
         
     }
     createForm(); 
