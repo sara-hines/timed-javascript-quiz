@@ -1,4 +1,3 @@
-
 *,
 *::before, 
 *::after {
@@ -10,8 +9,9 @@
     --darker: #1A1E21 ;
     --lighter-background: #353A48;
     --light-text: #D0D4D7;
-    --med-light-text: #A3A8B2;
+    --med-light-text: #b3b8c3;
     --bright: #FFDB6A;
+    --hover: #6E9ECF;
     --dark-text: #503F0F;
 }
 
@@ -24,7 +24,7 @@ body,
 } 
 
 body {
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode";
     background-image: radial-gradient(var(--lighter-background), var(--darker));
 }
 
@@ -32,28 +32,39 @@ body {
     color: var(--bright);
     padding: 20px;
     font-size: 6vw;
+    font-weight: lighter;
+    text-shadow: 2px 2px 4px var(--darker);
 }
 
 header {
     display: inline-block;
 }
 
+#view-scores:hover {
+    cursor: pointer;
+    transition: all .1s ease-in-out;
+    color: var(--hover);
+}
+
 .span-container {
     padding-top: 0px;
     margin-right: 20px;
     float: right;
+    text-align: right;
 }
 
 span {
     display: flex;
     flex-direction: row;
     width: 100%;
+    text-align: right;
 }
 
 .container {
-    padding-top: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
+    /* padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px; */
     max-width: 980px;
     margin: 0 auto;
     text-align: center;
@@ -61,16 +72,14 @@ span {
 
 .title-container {
     text-align: center;
-    padding: 10px;
-    padding-top: 6%; 
+    padding: 20px; 
     color: var(--light-text);
-    font-size: calc(30px + 0.390625vw);
-    font-size: em;
     height: em;
     margin: 0px;
 }
 
 .title-container h1 {
+    font-size: 8vw;
     height: em;
     margin: 0px;
     text-shadow: 2px 2px 4px var(--darker);
@@ -78,10 +87,11 @@ span {
 
 .med-text {
     /* font-size: calc(25px + 0.390625vw); */
-    font-size: calc(40px + 0.390625vw);
+    font-size: 6vw;
     color: var(--med-light-text);
     text-shadow: 2px 2px 4px var(--darker);
-    margin: 80px auto;
+    margin: 10px auto;
+    padding: 10px;
     text-align: center;
 }
 
@@ -95,37 +105,88 @@ span {
 
 .button-container {
     text-align: center;
-    height: 10%;
-    width: 185.79px;
+    height: 100%;
+    width: 13em;
     margin: 0 auto;
+    padding-top: 30px;
   }
   
-.button-container::before {
-    content: " ";
-    display: block;
-    width: 100%;
-    height: 2px;
-}
+/* .button-container::before { */
+    /* content: " ";
+    display: block; */
+    /* width: 100%; */
+    /* height: 2px; */
+/* } */
   
-.button-container::after {
-    content: " ";
-    display: block;
-    clear: both;
+/* .button-container::after { */
+    /* content: " "; */
+    /* display: block;
+    clear: both; */
+/* } */
+
+#start-button {
+    background-color: var(--bright);
+    color: var(--darker);
+    border-color: var(--darker);
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--darker);
+    font-size: 6vw;
+    height: 2em;
+    width: 80%;
 }
 
-.button {
-    background-color: var(--bright);
-    color: var(--dark-text);
-    border-color: var(--darker);
-    border-radius: 20px;
-    box-shadow: 0 0 20px var(--darker);
-    font-size: calc(25px + 0.390625vw);
-    height: 100%;
+button:hover {
+    cursor: pointer;
+    transition: all .1s ease-in-out;
+    background-color: var(--hover);
+}
+
+#submission-container {
+    display: inline-block;
+    width: 80%;
+    text-align: left;
+    align-self: center;
+
+}
+
+.label {
+    margin-top: 10px;
+    font: 50px;
+    font-size: 6vw;
+    color: var(--med-light-text);
+    text-shadow: 2px 2px 4px var(--darker);
+    text-align: left;
     width: 100%;
 }
+
+#initials {
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+    margin-top: 40px;
+    height: 4em;
+    border-radius: 5px;
+}
+
+#submit-container {
+    padding-top: 30px;
+}
+
+#submit-btn {
+    background-color: var(--bright);
+    color: var(--darker);
+    border-color: var(--darker);
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--darker);
+    font-size: 6vw;
+    height: 2em;
+    width: 80%;
+}
+
+
 
 /* @media screen and (min-width:480px) {
-    
+
     
     .med-text {
         font-size: 2em;
