@@ -4,7 +4,14 @@ var buttonContainer = document.querySelector(".button-container");
 var largeText = document.getElementById("large-text");
 var medText = document.querySelector(".med-text");
 var bodyText = document.querySelector(".body-text");
+var questionsText = document.querySelector(".questions");
+var viewScoresLink = document.getElementById("view-scores");
+var counterEl = document.querySelector(".counter"); 
+// Ultimately, I want the user to have 90 seconds to complete the quiz. I may mess with this value to test functionality, but I think 90 seconds is a good amount of time for them to have at the start.
 var currentIndex = 0;
+var secondsLeft = 90;
+var score = 0;
+
 
 var questions = [
     {
@@ -160,50 +167,6 @@ var questions = [
     }
 ]
 
-
-var counterEl = document.querySelector(".counter"); 
-// Ultimately, I want the user to have 90 seconds to complete the quiz. I may mess with this value to test functionality, but I think 90 seconds is a good amount of time for them to have at the start.
-var secondsLeft = 90;
-
-// This is how my time keeping used to be set up, but it allows time to decrease into the negatives. 
-// function setCounter() {
-//     var timerInterval = setInterval(function() {
-//         secondsLeft--;
-//         counterEl.textContent = "Time: " + secondsLeft;
-
-//         if(secondsLeft === 0) {
-//             clearInterval(timerInterval);
-//             allDone();
-//         }
-//     }, 1000);
-// }
-
-// This still allows time to go into the negatives and it doesn't take the user to All Done when the time is up
-// function setCounter() {
-//     if (secondsLeft > 0) {
-//         var timerInterval = setInterval(function() {
-//             secondsLeft--;
-//             counterEl.textContent = "Time: " + secondsLeft;
-//     }, 1000);
-//     } else {
-//         clearInterval(timerInterval);
-//         allDone();
-//     }
-// }
-    
-// This also does not take user to All Done page when timer is up, and it still allows time to go into the negatives.
-// function setCounter() {
-//     var timerInterval = setInterval(function() {
-//         secondsLeft--;
-//         counterEl.textContent = "Time: " + secondsLeft;
-//     }, 1000);
-
-//     if (secondsLeft <= 0) {
-//         clearInterval(timerInterval);
-//         allDone();
-//     }
-// }
-
 function setCounter() {
     var timerInterval = setInterval(function() {
         if (secondsLeft > 0) {
@@ -215,17 +178,19 @@ function setCounter() {
             allDone();
         }
     }, 1000);
-}
-        
-
-var score = 0;
-
+}  
 
 startQuiz.addEventListener("click", function() {
     setCounter();
-    largeText.remove();
+    largeText.innerHTML = "";
     startQuiz.remove();
-    medText.textContent = questions[currentIndex].text;
+    medText.textContent = "";
+    var q1Text = document.createElement("p");
+    q1Text.textContent = questions[currentIndex].text
+    q1Text.classList.add("questions");
+    q1Text.setAttribute("id", "question1")
+    bodyText.append(q1Text);
+    // medText.textContent = questions[currentIndex].text;
 
     for(i = 0; i < 4; i++) {
         createButton(questions[currentIndex].options[i]);
@@ -240,120 +205,150 @@ function createButton (text) {
     newButton.classList.add("button");
     newButton.addEventListener("click", goToNext);
     buttonContainer.append(newButton);
-
-    // Problem: some correct answers are causing the secondsLeft to be decreased, and some questions are causing the score to be increased and the secondsLeft to be decreased. I tried the below 2 methods within the createButton function to try to make only the correct answer buttons get the event listener that increases score by 1, and only the incorrect answer buttons get the event listener that decreases secondsLeft. Neither method worked, and the first method got rid of all answer buttons except 1, for each question.
-
-    // if (text == correct) {
-    //     newButton = correctButton
-    //     correctButton.addEventListener("click", function() {
-    //         score = score + 1;
-    //         console.log("Score increased by 1.");
-    //     })
-    // } else {
-    //     newButton = incorrectButton
-    //     incorrectButton.addEventListener("click", function() {
-    //         secondsLeft = secondsLeft - 15;
-    //     })
-    //     console.log("Score not increased, and secondsLeft has been decreased by 15.");
-    // }
-
-    // if (text == correct) {
-    //     var correctButton = newButton
-    //     correctButton.addEventListener("click", function() {
-    //         score = score + 1;
-    //         console.log("Score increased by 1.");
-    //     })
-    // } else {
-    //     var incorrectButton = newButton
-    //     incorrectButton.addEventListener("click", function() {
-    //         secondsLeft = secondsLeft - 15;
-    //     })
-    //     console.log("Score not increased, and secondsLeft has been decreased by 15.");
-    // }  
 }
 
-
-//     This was another previous attempt to increase score if a question is answered correctly: 
-// The below only ever causes "Score will not be increased" to be logged, so I know that my attempt to increase the score by 1 when a correct answer is clicked is not working.
-//     if (questions[0].options.textContent === questions[0].correct) {
-//         newButton.onclick = function addToScore() {
-//         addToScore();
-//         score = score + 1;
-//         console.log("Score increased by 1.");
-//         }
-//     } else {
-//         console.log("Score will not be increased.");
-//     }
-// }
-
+// How does function goToNext know that the event we want to pass to it is the click on one of the answer buttons? Because we have an event listener which contains goToNext as an argument/parameter?
 function goToNext(event) {
-    // research the below line if it's still not working and figure out how to access what we need to now. 
+    q1Text = document.getElementById("question1");
+    q1Text.textContent = "";
     var chosenAnswer = event.target.textContent;
-    console.log(currentIndex)
-    console.log(chosenAnswer);
+    // console.log(currentIndex)
+    // console.log(chosenAnswer);
     var correctAnswer = questions[currentIndex].correct
-    console.log(correctAnswer);
+    // console.log(correctAnswer);
     if (currentIndex < questions.length - 1) {
         currentIndex++;
 
         // The below line changes the text content of the element holding the text of the question to be the value of the text key in the array of objects named questions, for the currentIndex (which identifies the question we're on).
-        medText.textContent = questions[currentIndex].text;
+        questionsText.textContent = questions[currentIndex].text;
         buttonContainer.innerHTML = "";
 
         for (i = 0; i < 4; i++) {
             createButton(questions[currentIndex].options[i]);
-            // createButton(questions[currentIndex].options[i], questions[currentIndex].correct);
         }   
 
-        // Does the below if else need to be looped? The function goToNext already calls the createButton function to happen for each i of the answers. But that will only create the buttons, and we need the below if else to happen for each of the buttons. So, I think we have to loop it. 
-
         if (chosenAnswer == correctAnswer) {
-            // var correctButton = document.querySelectorAll("button");
-            // correctButton.addEventListener("click", function() {
                 score = score + 1;
-                console.log("Your current score is " + score + " (increased by 1) and your secondsLeft is " + secondsLeft + " (time was not decreased).")
-            // })
+                // console.log("Your current score is " + score + " (increased by 1) and your secondsLeft is " + secondsLeft + " (time was not decreased).")
         } else {
-        //     var incorrectButton = document.querySelector("button")
-        //     incorrectButton.addEventListener("click", function() {
-                secondsLeft = secondsLeft - 15;
-                console.log("Your current score is " + score + " (unchanged) and your secondsLeft is " + secondsLeft + " (time was decreased by 15 sec).")
-        //     })
+                secondsLeft = secondsLeft - 10;
+                // console.log("Your current score is " + score + " (unchanged) and your secondsLeft is " + secondsLeft + " (time was decreased by 10 sec).")
         }
     // I added the below because without it, the last question (question 15, currentIndex = 14) does not make any impact on score or secondsLeft depending on how the user answers.
     } else if (currentIndex = questions.length) {
         if (chosenAnswer == correctAnswer) {
                 score = score + 1;
-                console.log("Your current score is " + score + " (increased by 1) and your secondsLeft is " + secondsLeft + " (time was not decreased).")
+                // console.log("Your current score is " + score + " (increased by 1) and your secondsLeft is " + secondsLeft + " (time was not decreased).")
         } else {
-                secondsLeft = secondsLeft - 15;
-                console.log("Your current score is " + score + " (unchanged) and your secondsLeft is " + secondsLeft + " (time was decreased by 15 sec).")
+                secondsLeft = secondsLeft - 10;
+                // console.log("Your current score is " + score + " (unchanged) and your secondsLeft is " + secondsLeft + " (time was decreased by 10 sec).")
         }
         allDone();
     }    
 }
+console.log("This is my string!");
 
 function allDone() {
     largeText.textContent = "All done!";
     medText.textContent = "Your final score is " + score + " out of 15."
     buttonContainer.innerHTML = "";
-    console.log(score);
+    bodyText.innerHTML = "";
+    // console.log(score);
     function createForm() {
-        var createFormEl = document.createElement("form");
-        bodyText.appendChild(createFormEl);
+        var formEl = document.createElement("form");
+        bodyText.appendChild(formEl);
 
-        var createLabelEl = document.createElement("label");
-        createLabelEl.textContent = "Enter Initials:"
-        createFormEl.appendChild(createLabelEl);
+        var labelEl = document.createElement("label");
+        labelEl.textContent = "Enter Initials: "
+        formEl.appendChild(labelEl);
 
-        var createInputEl = document.createElement("input");
-        createFormEl.appendChild(createInputEl);
+        var inputEl = document.createElement("input");
+        inputEl.setAttribute("id", "initials");
+        formEl.appendChild(inputEl);
 
-        var newButtonEl = document.createElement("button");
-        newButtonEl.textContent = "Submit";
-        createFormEl.appendChild(newButtonEl);
+        var submitBtnEl = document.createElement("button");
+        submitBtnEl.textContent = "Submit";
+        
+        submitBtnEl.addEventListener("click", function(event) {
+            event.preventDefault();
+            var initialsEl = document.getElementById("initials");
+            if (initialsEl != null) {
+                var storedScores = {
+                    initials: initialsEl?.value.trim(),
+                    scores: score,
+                }
+                setScores(storedScores);
+                // MAKE SURE TO UNCOMMENT THIS LATER
+                // window.location.reload(); 
+            }
+              
+        })
+        formEl.appendChild(submitBtnEl);
+        
     }
-    createForm();
-    
-    // console.log("function allDone is working!");
+    createForm(); 
 }
+
+
+viewScoresLink.addEventListener("click", renderScores);
+
+function setScores(storedScores) { 
+    // console.log(storedScores);
+    var scores = [];
+    var lastScores = JSON.parse(localStorage.getItem("storedScores"));
+    if (lastScores !== null) {
+        scores = lastScores;
+    }
+    scores.push(storedScores);
+
+
+    localStorage.setItem("storedScores", JSON.stringify(scores));
+
+}
+
+
+function renderScores() {
+    
+    bodyText.innerHTML = "";
+    buttonContainer.innerHTML = "";
+    counterEl.innerHTML = "";
+    largeText.textContent = "High Scores"
+    medText.textContent = ""; 
+
+    var backBtn = document.createElement("button");
+    backBtn.textContent = "Back to Start";
+    buttonContainer.appendChild(backBtn);
+    backBtn.addEventListener("click", function(event) {
+        window.location.reload(); 
+    })
+    
+    var clearBtn = document.createElement("button");
+    clearBtn.textContent = "Clear High Scores";
+    buttonContainer.appendChild(clearBtn);
+
+    var lastScores = JSON.parse(localStorage.getItem("storedScores"));
+    console.log(lastScores);
+
+    if (lastScores !== null) {
+        var olForScores = document.createElement("ol");
+        bodyText.appendChild(olForScores);
+        for (i = 0; i < lastScores.length; i++) {
+            var liForScores = document.createElement("li");
+            liForScores.textContent = lastScores[i].initials + " - " + lastScores[i].scores;
+            olForScores.appendChild(liForScores);
+            clearBtn.addEventListener("click", function(event) {
+                localStorage.clear();
+                olForScores.innerHTML = "";
+            });
+        }
+    }
+}
+
+// var clearBtn = document.getElementById("clear-btn");
+// if (document.readyState === "complete") {
+//     clearBtn.addEventListener("click", function(event) {
+//     localStorage.clear();
+//     });
+// }
+
+

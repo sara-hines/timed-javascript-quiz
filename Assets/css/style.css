@@ -31,6 +31,7 @@ body {
 .header-container {
     color: var(--bright);
     padding: 20px;
+    font-size: 6vw;
 }
 
 header {
@@ -58,33 +59,44 @@ span {
     text-align: center;
 }
 
-.heading {
+.title-container {
     text-align: center;
     padding: 10px;
     padding-top: 6%; 
     color: var(--light-text);
     font-size: calc(30px + 0.390625vw);
+    font-size: em;
     height: em;
     margin: 0px;
 }
 
-.heading h1 {
+.title-container h1 {
     height: em;
     margin: 0px;
     text-shadow: 2px 2px 4px var(--darker);
 }
 
-.body-text {
-    font-size: calc(25px + 0.390625vw);
+.med-text {
+    /* font-size: calc(25px + 0.390625vw); */
+    font-size: calc(40px + 0.390625vw);
     color: var(--med-light-text);
     text-shadow: 2px 2px 4px var(--darker);
+    margin: 80px auto;
+    text-align: center;
 }
 
+.questions {
+    font-size: calc(40px + 0.390625vw);
+    color: var(--med-light-text);
+    text-shadow: 2px 2px 4px var(--darker);
+    margin: 80px auto;
+    text-align: left;
+}
 
 .button-container {
     text-align: center;
     height: 10%;
-    width: 20%;
+    width: 185.79px;
     margin: 0 auto;
   }
   
@@ -111,3 +123,20 @@ span {
     height: 100%;
     width: 100%;
 }
+
+/* @media screen and (min-width:480px) {
+    
+    
+    .med-text {
+        font-size: 2em;
+    }
+
+} */
+
+/* @media screen and (min-width: 768px) {
+
+}
+
+@media screen and (min-width: 992px) {
+
+} */
