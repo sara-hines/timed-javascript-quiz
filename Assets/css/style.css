@@ -61,11 +61,6 @@ span {
 }
 
 .container {
-    /* padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 5px;
-    padding-right: 5px; */
-    max-width: 980px;
     margin: 0 auto;
     text-align: center;
 }
@@ -78,15 +73,20 @@ span {
     margin: 0px;
 }
 
-.title-container h1 {
+h1 {
+    color: var(--light-text);
     font-size: 8vw;
     height: em;
     margin: 0px;
     text-shadow: 2px 2px 4px var(--darker);
 }
 
+.body-text {
+    padding-top: 30px;
+    align-items: center;
+}
+
 .med-text {
-    /* font-size: calc(25px + 0.390625vw); */
     font-size: 6vw;
     color: var(--med-light-text);
     text-shadow: 2px 2px 4px var(--darker);
@@ -95,36 +95,38 @@ span {
     text-align: center;
 }
 
-.questions {
-    font-size: calc(40px + 0.390625vw);
-    color: var(--med-light-text);
-    text-shadow: 2px 2px 4px var(--darker);
-    margin: 80px auto;
+#q1-container, 
+#questions-container {
+    display: inline-block;
+    width: 85%;
+    align-self: center;
     text-align: left;
 }
 
-.button-container {
-    text-align: center;
-    height: 100%;
-    width: 13em;
+#question1 {
+    width: 100%;
+    align-self: center;
+    padding-left: 10px;
+}
+
+.questions {
+    width: 100%;
+    font-size: 6vw;
+    color: var(--med-light-text);
+    text-shadow: 2px 2px 4px var(--darker);
+    text-align: left;
+    padding-top: 50px;
+}
+
+/* This is the button container for the start button */
+.btn-container {
+    align-items: center;
+    width: 100%;
     margin: 0 auto;
     padding-top: 30px;
-  }
-  
-/* .button-container::before { */
-    /* content: " ";
-    display: block; */
-    /* width: 100%; */
-    /* height: 2px; */
-/* } */
-  
-/* .button-container::after { */
-    /* content: " "; */
-    /* display: block;
-    clear: both; */
-/* } */
+}
 
-#start-button {
+#start-btn {
     background-color: var(--bright);
     color: var(--darker);
     border-color: var(--darker);
@@ -132,7 +134,20 @@ span {
     box-shadow: 0 0 20px var(--darker);
     font-size: 6vw;
     height: 2em;
-    width: 80%;
+    width: 85%;
+}
+
+.btn {
+    background-color: var(--bright);
+    color: var(--darker);
+    border-color: var(--darker);
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--darker);
+    font-size: 4vw;
+    height: 5em;
+    width: 85%;
+    margin: 5px 0px;
+    text-align: left;
 }
 
 button:hover {
@@ -143,10 +158,20 @@ button:hover {
 
 #submission-container {
     display: inline-block;
-    width: 80%;
+    width: 85%;
     text-align: left;
     align-self: center;
 
+}
+
+#score-message {
+    font-size: 6vw;
+    color: var(--med-light-text);
+    text-shadow: 2px 2px 4px var(--darker);
+    margin: 0 auto;
+    text-align: left;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 .label {
@@ -180,14 +205,67 @@ button:hover {
     box-shadow: 0 0 20px var(--darker);
     font-size: 6vw;
     height: 2em;
-    width: 80%;
+    width: 85%;
 }
 
+ol {
+    width: 85%;
+    align-self: center;
+    text-align: justify;
+}
 
+.li-scores {
+    font-size: 6vw;
+    color: var(--med-light-text);
+    text-shadow: 2px 2px 4px var(--darker);
+    text-align: left;
+    margin-left: 7.5%;
+}
+
+#score-btn-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 85%;
+    margin: 0 auto;
+    padding-top: 30px;
+}
+
+#back-btn {
+    width: 49%;
+    background-color: var(--bright);
+    color: var(--darker);
+    border-color: var(--darker);
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--darker);
+    font-size: 4vw;
+    height: 2.5em;
+    text-align: center;
+}
+
+#clear-btn {
+    width: 49%;
+    background-color: var(--bright);
+    color: var(--darker);
+    border-color: var(--darker);
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--darker);
+    font-size: 4vw;
+    height: 2.5em;
+    text-align: center;
+}
+
+#start-btn:hover,
+#submit-btn:hover, 
+#back-btn:hover, 
+#clear-btn:hover {
+    cursor: pointer;
+    transition: all .1s ease-in-out;
+    background-color: var(--hover);
+}
 
 /* @media screen and (min-width:480px) {
-
-    
     .med-text {
         font-size: 2em;
     }

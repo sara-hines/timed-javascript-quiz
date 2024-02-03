@@ -1,6 +1,6 @@
 var startQuiz = document.querySelector("button");
-// Appending an element means adding it inside a container, so I created the buttonContainer to have a container in which to append the button elements for the answer options.
-var buttonContainer = document.querySelector(".button-container");
+var btnContainer = document.querySelector(".btn-container");
+var titleContainer = document.querySelector(".title-container");
 var largeText = document.getElementById("large-text");
 var medText = document.querySelector(".med-text");
 var bodyText = document.querySelector(".body-text");
@@ -14,7 +14,6 @@ var counterEl = document.querySelector(".counter");
 var currentIndex = 0;
 var secondsLeft = 90;
 var score = 0;
-
 
 var questions = [
     {
@@ -78,7 +77,7 @@ var questions = [
         correct: "1. console.log(typeof typesOfPlants);",
     },
     {
-        text: "7. Given that we need to store and manipulate an element which contains directions to make crepes, and the element has a class of \"directions\", how could we select this element?",
+        text: "7. Given that we need to manipulate an element which contains directions to make crepes, and the element has a class of \"directions\", how could we select this element?",
         options: [
             "1. var directions = document.querySelector(.\"crepe\");",
             "2. var crepe = document.querySelector(\".directions\");",
@@ -89,17 +88,17 @@ var questions = [
 
     },
     {
-        text: "8. Given that we have an unordered list selected and stored in a variable named cars, and we need to create and append a new list item with the text \"Silver Thunderbird\", how could we achieve this?",
+        text: "8. Which of the below options would append a list item stored in the variable myCar to an unordered list stored in the variable cars?",
         options: [
-            "1. var myCar = document[5].createElement(\"li\");\nmyCar.text[0] = \"Silver Thunderbird\";\ncars.append(myCar);",
-            "2. var myCar = document.createElement(\"li\");\nmyCar.textContent = \"Silver Thunderbird\";\ncars.append(myCar);",
-            "3. var myCar = document.newElement(\"li\");\nmyCar.textContent = \"Silver Thunderbird\";\ncars.add(myCar);",
-            "4. var myCar = createElement(\"li\");\nmyCar.textContent = \"Silver Thunderbird\";\ncars.append(myCar);",
+            "1. \nmyCar.append(cars);",
+            "2. \ncars.append(myCar);",
+            "3. \ncars.add(myCar);",
+            "4. \ncars.setItem(myCar);",
         ],
-        correct: "2. var myCar = document.createElement(\"li\");\nmyCar.textContent = \"Silver Thunderbird\";\ncars.append(myCar);",
+        correct: "2. \ncars.append(myCar);",
     },
     {
-        text: "9. Given that we need to style an h2 we currently have selected and stored in a variable named headings, and we have a class named \"fancy\" which would apply the desired styling, how can we achieve this?",
+        text: "9. Given that we need to style an h2 which is stored in a variable named headings, and we have a class named \"fancy\" which would apply the desired styling, how can we achieve this?",
         options: [
             "1. headings.classes.add(\"fancy\");",
             "2. headings.styling.class(\"fancy\");",
@@ -141,12 +140,12 @@ var questions = [
     {
         text: "13. Which of the following would create a valid JavaScript object literal?",
         options: [
-            "1. var cat = [name: \"Aster\", coloring: \"black\", age: 12]",
-            "2. const cat = {name: \"Aster\", coloring: \"black\", age: 12}",
-            "3. const cat = [\"Aster\", \"black\", 12]",
-            "4. let cat = {name: \"Aster\"; coloring: \"black\"; age: 12}",
+            "1. var cat = [name: \"Aster\", coloring: \"black\", age: 12];",
+            "2. const cat = {name: \"Aster\", coloring: \"black\", age: 12};",
+            "3. const cat = [\"Aster\", \"black\", 12];",
+            "4. let cat = {name: \"Aster\"; coloring: \"black\"; age: 12};",
         ],
-        correct: "2. const cat = {name: \"Aster\", coloring: \"black\", age: 12}",
+        correct: "2. const cat = {name: \"Aster\", coloring: \"black\", age: 12};",
     },
     {
         text: "14. How could you combine an array named moonPhase with an array named solarEvent, given that the contents of moonPhase should appear after the contents of solarEvent?",
@@ -161,10 +160,10 @@ var questions = [
     {
         text: "15. How could you create a for loop to iterate through and console log each element of an array called users, which is contains 999 elements?",
         options: [
-            "1. for (var i = 0; i < 1000; i++) {\nconsole.log(users[i]);\n};",
-            "2. for (var i = 0; i++; i < users.length) {\nconsole.log(users[i]);\n};",
-            "3. for (var i = 1; i++; i < users.length) {\nconsole.log(users[i]);\n};",
-            "4. for (var i = 0; i < users.length; i++) {\nconsole.log(users[i]);\n};",
+            "1. for (var i = 0; i < 1000; i++) {\nconsole.log(users[i]);\n}",
+            "2. for (var i = 0; i++; i < users.length) {\nconsole.log(users[i]);\n}",
+            "3. for (var i = 1; i++; i < users.length) {\nconsole.log(users[i]);\n}",
+            "4. for (var i = 0; i < users.length; i++) {\nconsole.log(users[i]);\n}",
         ],
         correct: "4. for (var i = 0; i < users.length; i++) {\nconsole.log(users[i]);\n};",
     }
@@ -185,80 +184,76 @@ function setCounter() {
 
 startQuiz.addEventListener("click", function() {
     setCounter();
+    titleContainer.remove();
     largeText.innerHTML = "";
     startQuiz.remove();
-    medText.textContent = "";
+    medText.remove();
+    var q1Container = document.createElement("div");
+    q1Container.setAttribute("id", "q1-container");
     var q1Text = document.createElement("p");
     q1Text.textContent = questions[currentIndex].text
     q1Text.classList.add("questions");
     q1Text.setAttribute("id", "question1")
-    bodyText.append(q1Text);
-    // medText.textContent = questions[currentIndex].text;
+    bodyText.appendChild(q1Container);
+    q1Container.appendChild(q1Text);
 
     for(i = 0; i < 4; i++) {
-        createButton(questions[currentIndex].options[i]);
+        createbtn(questions[currentIndex].options[i]);
     }
 })
 
-function createButton (text) {
-    var newButton = document.createElement("button");
-    newButton.textContent = text;
-    // What is text here, which we are passing as a parameter and which we are setting to be the text content of the newButton? It is the text of each of the answer buttons. Why is that? Where does this come from? 
-    // console.log(text);
-    newButton.classList.add("button");
-    newButton.addEventListener("click", goToNext);
-    buttonContainer.append(newButton);
+function createbtn (text) {
+    var newbtn = document.createElement("button");
+    newbtn.textContent = text;
+    newbtn.classList.add("btn");
+    newbtn.addEventListener("click", goToNext);
+    btnContainer.append(newbtn);
 }
 
-// How does function goToNext know that the event we want to pass to it is the click on one of the answer buttons? Because we have an event listener which contains goToNext as an argument/parameter?
 function goToNext(event) {
     q1Text = document.getElementById("question1");
-    q1Text.textContent = "";
+    if (q1Text) {
+        q1Text.remove();
+    }
+    
     var chosenAnswer = event.target.textContent;
-    // console.log(currentIndex)
-    // console.log(chosenAnswer);
     var correctAnswer = questions[currentIndex].correct
-    // console.log(correctAnswer);
     if (currentIndex < questions.length - 1) {
         currentIndex++;
-
         // The below line effectively removes the display: none previously set on questionsText.
         questionsText.style.display = "unset";
         // The below line changes the text content of the element holding the text of the question to be the value of the text key in the array of objects named questions, for the currentIndex (which identifies the question we're on).
         questionsText.textContent = questions[currentIndex].text;
-        buttonContainer.innerHTML = "";
+        questionsText.classList.add("questions");
+        btnContainer.innerHTML = "";
 
         for (i = 0; i < 4; i++) {
-            createButton(questions[currentIndex].options[i]);
+            createbtn(questions[currentIndex].options[i]);
         }   
 
         if (chosenAnswer == correctAnswer) {
                 score = score + 1;
-                // console.log("Your current score is " + score + " (increased by 1) and your secondsLeft is " + secondsLeft + " (time was not decreased).")
         } else {
                 secondsLeft = secondsLeft - 10;
-                // console.log("Your current score is " + score + " (unchanged) and your secondsLeft is " + secondsLeft + " (time was decreased by 10 sec).")
         }
     // I added the below because without it, the last question (question 15, currentIndex = 14) does not make any impact on score or secondsLeft depending on how the user answers.
     } else if (currentIndex = questions.length) {
         if (chosenAnswer == correctAnswer) {
                 score = score + 1;
-                // console.log("Your current score is " + score + " (increased by 1) and your secondsLeft is " + secondsLeft + " (time was not decreased).")
         } else {
                 secondsLeft = secondsLeft - 10;
-                // console.log("Your current score is " + score + " (unchanged) and your secondsLeft is " + secondsLeft + " (time was decreased by 10 sec).")
         }
         allDone();
     }    
 }
-console.log("This is my string!");
 
 function allDone() {
-    largeText.textContent = "All done!";
-    medText.textContent = "Your final score is " + score + " out of 15."
-    buttonContainer.innerHTML = "";
+    btnContainer.innerHTML = "";
     bodyText.innerHTML = "";
-    // console.log(score);
+    largeText.textContent = "All done!";
+    var scoreMessage = document.createElement("p");
+    scoreMessage.textContent = "Your final score is " + score + " out of 15."
+    scoreMessage.setAttribute("id", "score-message");
     function createForm() {
         var formEl = document.createElement("form");
         bodyText.appendChild(formEl);
@@ -270,6 +265,7 @@ function allDone() {
         var labelEl = document.createElement("label");
         labelEl.classList.add("label");
         labelEl.textContent = "Enter Initials: "
+        submissionContainer.appendChild(scoreMessage);
         submissionContainer.appendChild(labelEl);
 
         var inputEl = document.createElement("input");
@@ -283,7 +279,6 @@ function allDone() {
         var submitBtnEl = document.createElement("button");
         submitBtnEl.textContent = "Submit";
         submitBtnEl.setAttribute("id", "submit-btn");
-
         submitBtnEl.addEventListener("click", function(event) {
             event.preventDefault();
             var initialsEl = document.getElementById("initials");
@@ -293,19 +288,15 @@ function allDone() {
                     scores: score,
                 }
                 setScores(storedScores);
-                // MAKE SURE TO UNCOMMENT THIS LATER
-                // window.location.reload(); 
-            }
-              
-        })
-        submitBtnContainer.appendChild(submitBtnEl);
-        
+                window.location.reload(); 
+            }     
+        });
+        submitBtnContainer.appendChild(submitBtnEl); 
     }
     createForm(); 
 }
 
-
-viewScoresLink.addEventListener("click", renderScores);
+viewScoresLink.addEventListener("click", renderScores, {once: true});
 
 function setScores(storedScores) { 
     // console.log(storedScores);
@@ -315,41 +306,46 @@ function setScores(storedScores) {
         scores = lastScores;
     }
     scores.push(storedScores);
-
-
     localStorage.setItem("storedScores", JSON.stringify(scores));
-
 }
 
-
 function renderScores() {
-    
     bodyText.innerHTML = "";
-    buttonContainer.innerHTML = "";
+    btnContainer.innerHTML = "";
     counterEl.innerHTML = "";
-    largeText.textContent = "High Scores"
+    largeText.innerHTML = "";
+    var scoresTitle = document.createElement("h1");
+    // Why is the below line not working anymore? It was working before.
+    scoresTitle.textContent = "High Scores";
+    titleContainer.appendChild(scoresTitle);
     medText.textContent = ""; 
+    var scoresBtnContainer = document.createElement("div");
+    scoresBtnContainer.setAttribute("id", "score-btn-container");
 
     var backBtn = document.createElement("button");
     backBtn.textContent = "Back to Start";
-    buttonContainer.appendChild(backBtn);
+    backBtn.setAttribute("id", "back-btn");
+    scoresBtnContainer.appendChild(backBtn);
     backBtn.addEventListener("click", function(event) {
         window.location.reload(); 
     })
-    
+
     var clearBtn = document.createElement("button");
     clearBtn.textContent = "Clear High Scores";
-    buttonContainer.appendChild(clearBtn);
+    clearBtn.setAttribute("id", "clear-btn");
+    scoresBtnContainer.appendChild(clearBtn);
 
     var lastScores = JSON.parse(localStorage.getItem("storedScores"));
     console.log(lastScores);
 
     if (lastScores !== null) {
         var olForScores = document.createElement("ol");
+        olForScores.classList.add("med-text");
         bodyText.appendChild(olForScores);
         for (i = 0; i < lastScores.length; i++) {
             var liForScores = document.createElement("li");
             liForScores.textContent = lastScores[i].initials + " - " + lastScores[i].scores;
+            liForScores.classList.add("li-scores");
             olForScores.appendChild(liForScores);
             clearBtn.addEventListener("click", function(event) {
                 localStorage.clear();
@@ -357,13 +353,8 @@ function renderScores() {
             });
         }
     }
+    bodyText.appendChild(scoresBtnContainer);
 }
 
-// var clearBtn = document.getElementById("clear-btn");
-// if (document.readyState === "complete") {
-//     clearBtn.addEventListener("click", function(event) {
-//     localStorage.clear();
-//     });
-// }
 
 
