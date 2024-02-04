@@ -5,6 +5,8 @@ A timed, multiple choice quiz on JavaScript fundamentals.
 
 Need to cite:
 
+christian's Oct 8, 2022 answer to question about getting an event listener to execute only once using {once:true}: https://stackoverflow.com/questions/16715075/preventing-multiple-clicks-on-button
+
 https://matthewjamestaylor.com/responsive-font-size#:~:text=To%20make%20font%20size%20responsive%20in%20steps%2C%20set%20the%20base,relative%20to%20the%20screen%20width. (to make font size responsive)
 
 https://stackoverflow.com/questions/6821295/add-css-box-shadow-around-the-whole-div (how to not offset a box-shadow)

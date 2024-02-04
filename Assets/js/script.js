@@ -1,18 +1,18 @@
 var startQuiz = document.querySelector("button");
 var btnContainer = document.querySelector(".btn-container");
 var titleContainer = document.querySelector(".title-container");
+var headerContainer = document.querySelector(".header-container");
 var largeText = document.getElementById("large-text");
 var medText = document.querySelector(".med-text");
 var bodyText = document.querySelector(".body-text");
 var questionsText = document.querySelector(".questions");
 // The below line is necessary so that there is a container for the questions to be generated inside, but that container will not disrupt the styling of the start page. 
 questionsText.style.display = "none";
-// questionsText.setAttribute("style", "height: 0px; width: 0px");
 var viewScoresLink = document.getElementById("view-scores");
 var counterEl = document.querySelector(".counter"); 
-// Ultimately, I want the user to have 90 seconds to complete the quiz. I may mess with this value to test functionality, but I think 90 seconds is a good amount of time for them to have at the start.
 var currentIndex = 0;
-var secondsLeft = 90;
+// REMEMBER TO CHANGE THIS BACK
+var secondsLeft = 900;
 var score = 0;
 
 var questions = [
@@ -77,7 +77,7 @@ var questions = [
         correct: "1. console.log(typeof typesOfPlants);",
     },
     {
-        text: "7. Given that we need to manipulate an element which contains directions to make crepes, and the element has a class of \"directions\", how could we select this element?",
+        text: "7. How could you select an element which which stores a recipe for crepes and has a class of \"directions\"?",
         options: [
             "1. var directions = document.querySelector(.\"crepe\");",
             "2. var crepe = document.querySelector(\".directions\");",
@@ -98,7 +98,7 @@ var questions = [
         correct: "2. \ncars.append(myCar);",
     },
     {
-        text: "9. Given that we need to style an h2 which is stored in a variable named headings, and we have a class named \"fancy\" which would apply the desired styling, how can we achieve this?",
+        text: "9. We need to style an h2 which is stored in a variable named headings. How can we apply a class named \"fancy\" to the h2?",
         options: [
             "1. headings.classes.add(\"fancy\");",
             "2. headings.styling.class(\"fancy\");",
@@ -148,7 +148,7 @@ var questions = [
         correct: "2. const cat = {name: \"Aster\", coloring: \"black\", age: 12};",
     },
     {
-        text: "14. How could you combine an array named moonPhase with an array named solarEvent, given that the contents of moonPhase should appear after the contents of solarEvent?",
+        text: "14. How could you combine an array named moonPhase with an array named solarEvent, given the contents of moonPhase should appear at the end?",
         options: [
             "1. var sunAndMoon = solarEvent.concat(moonPhase);",
             "2. var sunAndMoon = moonPhase.concat(solarEvent);",
@@ -250,7 +250,11 @@ function goToNext(event) {
 function allDone() {
     btnContainer.innerHTML = "";
     bodyText.innerHTML = "";
-    largeText.textContent = "All done!";
+    var allDoneText = document.createElement("h1");
+    allDoneText.textContent = "All done!";
+    allDoneText.setAttribute("id", "all-done");
+    bodyText.appendChild(allDoneText);
+
     var scoreMessage = document.createElement("p");
     scoreMessage.textContent = "Your final score is " + score + " out of 15."
     scoreMessage.setAttribute("id", "score-message");
@@ -310,6 +314,8 @@ function setScores(storedScores) {
 }
 
 function renderScores() {
+    viewScoresLink.style.visibility = "hidden";
+    titleContainer.remove();
     bodyText.innerHTML = "";
     btnContainer.innerHTML = "";
     counterEl.innerHTML = "";
@@ -317,7 +323,7 @@ function renderScores() {
     var scoresTitle = document.createElement("h1");
     // Why is the below line not working anymore? It was working before.
     scoresTitle.textContent = "High Scores";
-    titleContainer.appendChild(scoresTitle);
+    headerContainer.appendChild(scoresTitle);
     medText.textContent = ""; 
     var scoresBtnContainer = document.createElement("div");
     scoresBtnContainer.setAttribute("id", "score-btn-container");
