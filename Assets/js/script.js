@@ -167,7 +167,7 @@ var questions = [
             "3. for (var i = 1; i++; i < users.length) {\nconsole.log(users[i]);\n}",
             "4. for (var i = 0; i < users.length; i++) {\nconsole.log(users[i]);\n}",
         ],
-        correct: "4. for (var i = 0; i < users.length; i++) {\nconsole.log(users[i]);\n};",
+        correct: "4. for (var i = 0; i < users.length; i++) {\nconsole.log(users[i]);\n}",
     }
 ]
 
@@ -237,14 +237,14 @@ function goToNext(event) {
             createBtn(questions[currentIndex].options[i]);
         }   
         if (chosenAnswer == correctAnswer) {
-                score = score + 1;
+                score++;
         } else {
                 secondsLeft = secondsLeft - 10;
         }
     // On the last question (question 15), the score-keeping and time-keeping still need to be impacted by user input, but no new questions or answers need to be displayed, and function allDone needs to be called instead to allow the user to view and save their score. 
     } else if (currentIndex = questions.length) {
         if (chosenAnswer == correctAnswer) {
-                score = score + 1;
+                score++;
         } else {
                 secondsLeft = secondsLeft - 10;
         }
@@ -254,6 +254,9 @@ function goToNext(event) {
 
 // Function allDone displays a message that the quiz is completed, displays the user's score, and generates form elements which allow the user to save their score upon clicking the submit button. Elements which would disrupt the page in meaning or style are cleared, and ids are applied to the new elements to be used for styling purposes.
 function allDone() {
+    // The below two lines are necessary to immediately stop and clear the text content of the timer if the user finishes the quiz before the 90 seconds alloted have passed. 
+    secondsLeft = 0;
+    counterEl.textContent = "";
     btnContainer.innerHTML = "";
     bodyText.innerHTML = "";
     var allDoneText = document.createElement("h1");
@@ -288,10 +291,12 @@ function allDone() {
         submitBtnEl.setAttribute("id", "submit-btn");
         submitBtnEl.addEventListener("click", function(event) {
             event.preventDefault();
-            // If there is a variable called inputEl (which stores the users initials when the submit button is clicked), then the user's initials and score should be passed to the function setScores which saves scores to local storage. After the user's initial and score are saved, the window is reloaded to signal that the score was saved and prevent the user from saving the same score twice. 
+            // If there is a variable called inputEl (which stores the users initials when the submit button is clicked), then the user's initials (capitalized, if needed, with any excess white space trimmed) and score should be passed to the function setScores which saves scores to local storage. After the user's initial and score are saved, the window is reloaded to signal that the score was saved and prevent the user from saving the same score twice.             
             if (inputEl != null) {
+                var inputElText = inputEl?.value.trim();
+                var inputElUpperCase = inputElText.toUpperCase();
                 var storedScores = {
-                    initials: inputEl?.value.trim(),
+                    initials: inputElUpperCase,
                     scores: score,
                 }
                 setScores(storedScores);
@@ -310,7 +315,6 @@ viewScoresLink.addEventListener("click", renderScores, {once: true});
 
 // Function setScores gets any previously stored scores, parses them since they would have been stringified when storing them originally, adds the user's new score to be saved (by passing in the storedScores object), and sets the resulting stringified array to local storage.
 function setScores(storedScores) { 
-    // console.log(storedScores);
     var scores = [];
     var lastScores = JSON.parse(localStorage.getItem("storedScores"));
     if (lastScores !== null) {
