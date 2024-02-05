@@ -1,8 +1,9 @@
 # timed-javascript-quiz
 A timed, multiple choice quiz on JavaScript fundamentals. 
 
+![Uploading hover2.gif…]()
 
-![hover1](https://github.com/sara-hines/timed-javascript-quiz/assets/90005274/a03be8e6-ef72-419c-ab2d-3c4a6b1369bd)
+
 
 ## Citations
 
