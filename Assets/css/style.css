@@ -1,0 +1,447 @@
+*,
+*::before, 
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    --darker: #1A1E21;
+    --lighter-background: #353A48;
+    --light-text: #D0D4D7;
+    --med-light-text: #b3b8c3;
+    --bright: #FFDB6A;
+    --hover: #6E9ECF;
+}
+
+html, 
+body,
+.container {
+    height: 100%;
+    margin: 0; 
+    padding: 0;
+} 
+
+/* I experimented with a radial-gradient background to create a background which becomes gradually darker towards the edges. */
+body {
+    font-family: "Trebuchet MS", "Lucida Sans Unicode";
+    background-image: radial-gradient(var(--lighter-background), var(--darker));
+}
+
+/* This container stores the "View High Scores" and "Time: [secondsLeft]" text. I used soft shadows selectively to help add some soft dimension. */
+.header-container {
+    color: var(--bright);
+    padding: 20px 20px 20px 35px;
+    font-size: 6vw;
+    text-shadow: 2px 2px 4px var(--darker);
+}
+
+header {
+    display: inline-block;
+}
+
+#view-scores:hover {
+    cursor: pointer;
+    transition: all .1s ease-in-out;
+    color: var(--hover);
+}
+
+.span-container {
+    float: right;
+    text-align: right;
+    padding-top: 0px;
+    margin-right: 20px;
+}
+
+span {
+    display: flex;
+    flex-direction: row;
+    text-align: right;
+    width: 100%;
+}
+
+.container {
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* This container houses the "JavaScript Coding Quiz Challenge" title. */
+.title-container {
+    text-align: center;
+    padding: 20px; 
+    margin: 0px;
+    height: em;
+    color: var(--light-text);
+}
+
+/* Styling for multiple h1s, including the "JavaScript Coding Quiz Challenge" title. */
+h1 {
+    text-align: center;
+    height: em;
+    margin: 0px;
+    font-size: 8vw;
+    color: var(--light-text);
+    text-shadow: 2px 2px 4px var(--darker);
+}
+
+.body-text {
+    align-items: center;
+    padding-top: 30px;
+}
+
+/* Styling for the quiz directions. */
+.med-text {
+    text-align: center;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 6vw;
+    color: var(--med-light-text);
+    text-shadow: 2px 2px 4px var(--darker);
+}
+
+#q1-container {
+    margin-top: -20%;
+}
+
+#q1-container, 
+#questions-container {
+    display: inline-block;
+    align-self: center;
+    text-align: left;
+    width: 85%;
+}
+
+#question1 {
+    align-self: center;
+    padding-left: 10px;
+    width: 100%;
+}
+
+.questions {
+    text-align: left;
+    padding-top: 50px;
+    width: 100%;
+    font-size: 6vw;
+    color: var(--med-light-text);
+    text-shadow: 2px 2px 4px var(--darker);
+}
+
+/* This container is used to style the "Start Quiz" button and the answer buttons. */
+.btn-container {
+    align-items: center;
+    margin: 0 auto;
+    padding-top: 30px;
+    width: 100%;
+}
+
+#start-btn {
+    height: 2.5em;
+    width: 85%;
+    font-size: 6vw;
+    background-color: var(--bright);
+    color: var(--darker);
+    border-color: var(--darker);
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--darker);
+}
+
+/* This .btn styling is for the answer buttons. */
+.btn {
+    text-align: left;
+    height: 4em;
+    width: 85%;
+    margin: 5px 0px;
+    font-size: 4vw;
+    background-color: var(--bright);
+    color: var(--darker);
+    border-color: var(--darker);
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--darker);
+}
+
+/* This styling is for the "All done!" h1 which signals the end of the quiz. */
+#all-done {
+    height: em;
+    margin: 0px;
+    font-size: 8vw;
+    color: var(--light-text);
+    text-shadow: 2px 2px 4px var(--darker);
+}
+
+/* On the All done page, this container aids styling of the "Your final score is [score] out of 15", "Enter Initials:" and the input element. */
+#submission-container {
+    display: inline-block;
+    align-self: center;
+    text-align: left;
+    width: 85%;
+}
+
+/* The below styles the "Your final score is [score] out of 15" text on the All done page. */
+#score-message {
+    text-align: left;
+    margin: 0 auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-size: 6vw;
+    color: var(--med-light-text);
+    text-shadow: 2px 2px 4px var(--darker);
+}
+
+/* This styling is for the "Enter Initials:" label element on the All done page. */
+label {
+    text-align: left;
+    margin-top: 10px;
+    width: 100%;
+    font: 50px;
+    font-size: 6vw;
+    color: var(--med-light-text);
+    text-shadow: 2px 2px 4px var(--darker);
+}
+
+/* This styles the input element where the user enters their initials. */
+input {
+    margin-top: 40px;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+    height: 2.2em;
+    font-size: 6vw;
+    border-radius: 5px;
+}
+
+/* The below styles the container for the "Submit" button on the All done page. */
+#submit-container {
+    display: inline-block;
+    align-self: center;
+    padding-top: 30px;
+    width: 85%;
+}
+
+/* The below styling is for the "Submit" button on the All done page. */
+#submit-btn {
+    height: 2.5em;
+    width: 100%;
+    font-size: 6vw;
+    background-color: var(--bright);
+    color: var(--darker);
+    border-color: var(--darker);
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--darker);
+}
+
+/* Styles the ordered list where the stored scores are rendered to the View High Scores page. */
+ol {
+    align-self: center;
+    text-align: justify;
+    width: 85%;
+    min-height: 300px;
+}
+
+/* Styles the list elements where the stored scores are rendered to the View High Scores page. */
+.li-scores {
+    text-align: left;
+    margin-left: 7.5%;
+    font-size: 6vw;
+    color: var(--med-light-text);
+    text-shadow: 2px 2px 4px var(--darker);
+}
+
+/* This is a container for the "Back to Start" and "Clear High Scores" buttons on the High Scores page. */
+#score-btn-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding-top: 30px;
+    width: 85%;
+}
+
+/* Styling for the "Back to Start" button on the High Scores page. */
+#back-btn {
+    text-align: center;
+    width: 49%;
+    height: 2.5em;
+    font-size: 4vw;
+    background-color: var(--bright);
+    color: var(--darker);
+    border-color: var(--darker);
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--darker);
+}
+
+/* Styling for the "Clear" button on the High Scores page. */
+#clear-btn {
+    text-align: center;
+    width: 49%;
+    height: 2.5em;
+    font-size: 4vw;
+    background-color: var(--bright);
+    color: var(--darker);
+    border-color: var(--darker);
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--darker);
+}
+
+/* Hover effect for all of the buttons. */
+.btn:hover, 
+#start-btn:hover,
+#submit-btn:hover, 
+#back-btn:hover, 
+#clear-btn:hover {
+    cursor: pointer;
+    transition: all .1s ease-in-out;
+    background-color: var(--hover);
+}
+
+/* Media queries to adjust styling as necessary as viewport width increases (styling is conducted from a mobile-first perspective). */
+@media screen and (min-width:720px) {
+    #q1-container {
+        margin-top: -85px;
+    }
+    .questions {
+        font-size: 3em;
+    }
+    .btn {
+        text-align: left;
+        margin: 5px 0px;
+        height: 4em;
+        width: 80%;
+        font-size: 3.5vw;
+    }
+    ol {
+        min-height: 450px;
+    }
+}
+
+@media screen and (min-width:850px) {
+    .header-container {
+        padding: 40px 50px 0px 60px;
+        font-size: 4.5vw;
+    }
+    .title-container {
+        padding-top: 80px;
+    }
+    h1 {
+        font-size: 7vw;
+    }
+    .med-text {
+        font-size: 5vw;
+    }
+    #start-btn {
+        width: 70vw;
+        height: 11vw;
+        font-size: 6vw;
+    }
+    #questions-container {
+        padding-top: 3em;
+    }
+    .questions {
+        font-size: 2.5em;
+    }
+    .btn {
+        margin: 10px 0px;
+        width: 80%;
+        height: 4em;
+        font-size: 2em;
+    }
+    ol {
+        min-height: 590px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .header-container {
+        padding: 40px 50px 0px 60px;
+        font-size: 3vw;
+    }
+    h1 {
+        font-size: 5vw;
+    }
+    .med-text {
+        padding-top: 1%;
+        padding-right: 2%;
+        padding-left: 2%;
+        font-size: 3vw;
+    }
+    #q1-container {
+        margin-top: -100px;
+        width: 60%;
+        font-size: 25px; 
+    }
+    #questions-container {
+        padding-top: 40px;
+        width: 60%;
+    }
+    .questions {
+        font-size: 50px;
+    }
+    .btn-container {
+        align-items: center;
+        margin: 0 auto;
+        padding-top: 1%;
+        width: 100%;
+    }
+    #start-btn {
+        width: 40vw;
+        height: 10vw;
+        font-size: 5vw;
+    }
+    .btn {
+        width: 60%;
+        height: 3.5em;
+        font-size: 2em;
+    }
+    #all-done {
+        font-size: 5vw;
+    }
+    #submission-container {
+        width: 100%;
+        height: 200px;
+    }
+    #score-message {
+        font-size: 55px;
+    }
+    form {
+        display: inline-block;
+        align-items: center;
+        width: 60%;
+    }
+    label {
+        font-size: 55px;
+    }
+    input {
+        height: 90%;
+        font-size: 3vw;
+    }
+    #submit-container {
+        display: block;
+        margin-top: 80px;
+        width: 100%;
+        height: 240px;
+    }
+    #submit-btn {
+        height: 90%;
+        font-size: 4.5vw;
+    }
+    ol {
+        padding: 0px;
+        height: 600px;
+        width: 60%;
+    }
+    .li-scores {
+        font-size: 70px; 
+    }
+    #score-btn-container {
+        justify-content: space-around;
+        padding: 0px;
+        width: 60%;
+    }
+    #back-btn {
+        width: 44%;
+        font-size: 2.5vw;
+    }
+    #clear-btn {
+        width: 44%;
+        font-size: 2.5vw;
+    }
+} 
