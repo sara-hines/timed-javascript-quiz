@@ -252,6 +252,7 @@ function goToNext(event) {
     }    
 }
 
+// I'm adding this comment to help add a change. 
 // Function allDone displays a message that the quiz is completed, displays the user's score, and generates form elements which allow the user to save their score upon clicking the submit button. Elements which would disrupt the page in meaning or style are cleared, and ids are applied to the new elements to be used for styling purposes.
 function allDone() {
     // The below two lines are necessary to immediately stop and clear the text content of the timer if the user finishes the quiz before the 90 seconds alloted have passed. 
